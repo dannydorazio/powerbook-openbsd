@@ -1,0 +1,110 @@
+#!/bin/sh
+# wifi-manager - Manage WiFi connections on OpenBSD
+
+CONFIG_FILE="${HOME}/.wifi-networks.json"
+WIFI_INTERFACE="bwi0"
+
+usage() {
+    echo "Usage: wifi-manager <command> [options]"
+    echo ""
+    echo "Commands:"
+    echo "    list                  List all configured networks"
+    echo "    connect <name>        Connect to a specific network"
+    echo "    disconnect            Disconnect from current network"
+    echo "    scan                  Scan for available networks"
+    echo "    add <name> <pass>     Add a new network"
+    echo "    status                Show current connection status"
+    exit 1
+}
+
+list_networks() {
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo "No networks configured yet."
+        return
+    fi
+    echo "Configured networks:"
+    echo "--------------------"
+    grep -o '"name"[^,]*' "$CONFIG_FILE" | sed 's/"name": *"/  /' | sed 's/"//'
+}
+
+connect_network() {
+    network_name="$1"
+    if [ -z "$network_name" ]; then
+        echo "Error: Network name required"
+        usage
+    fi
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo "Error: No networks configured"
+        exit 1
+    fi
+    password=$(grep -A 2 "\"name\": \"$network_name\"" "$CONFIG_FILE" | grep password | sed 's/.*"password": "//' | sed 's/".*//')
+    if [ -z "$password" ]; then
+        echo "Error: Network '$network_name' not found in config"
+        exit 1
+    fi
+    echo "Connecting to '$network_name'..."
+    ifconfig "$WIFI_INTERFACE" up
+    ifconfig "$WIFI_INTERFACE" nwid "$network_name" wpakey "$password"
+    sleep 3
+    printf 'nwid "%s" wpakey "%s"\n' "$network_name" "$password" > /etc/hostname.$WIFI_INTERFACE
+    echo "dhcp" >> /etc/hostname.$WIFI_INTERFACE
+    chmod 640 /etc/hostname.$WIFI_INTERFACE
+    if ifconfig "$WIFI_INTERFACE" | grep -q 'status: active'; then
+        echo "Connected successfully!"
+        sleep 2
+        ifconfig "$WIFI_INTERFACE" | grep 'inet '
+    else
+        echo "Warning: Connection may have failed. Check status."
+    fi
+}
+
+disconnect_network() {
+    echo "Disconnecting from WiFi..."
+    ifconfig "$WIFI_INTERFACE" down
+    echo "Disconnected"
+}
+
+scan_networks() {
+    echo "Scanning for networks..."
+    ifconfig "$WIFI_INTERFACE" up
+    sleep 1
+    ifconfig "$WIFI_INTERFACE" scan | grep 'nwid ' 
+}
+
+add_network() {
+    network_name="$1"
+    password="$2"
+    if [ -z "$network_name" ] || [ -z "$password" ]; then
+        echo "Error: Network name and password required"
+        usage
+    fi
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo '{"networks":[]}' > "$CONFIG_FILE"
+        chmod 600 "$CONFIG_FILE"
+    fi
+    sed -i '$ d' "$CONFIG_FILE"
+    sed -i '$ d' "$CONFIG_FILE"
+    if ! grep -q '"networks":\[\s*$' "$CONFIG_FILE"; then
+        echo "," >> "$CONFIG_FILE"
+    fi
+    printf '    {"name":"%s","password":"%s","enabled":true}' "$network_name" "$password" >> "$CONFIG_FILE"
+    echo "  ]" >> "$CONFIG_FILE"
+    echo "}" >> "$CONFIG_FILE"
+    echo "Network '$network_name' added successfully"
+}
+
+show_status() {
+    echo "WiFi Status:"
+    echo "------------"
+    ifconfig "$WIFI_INTERFACE" | grep -E 'status|nwid|inet '
+}
+
+case "$1" in
+    list) list_networks ;;
+    connect) connect_network "$2" ;;
+    disconnect) disconnect_network ;;
+    scan) scan_networks ;;
+    add) add_network "$2" "$3" ;;
+    status) show_status ;;
+    *) usage ;;
+esac

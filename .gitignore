@@ -1,0 +1,11 @@
+# Sensitive files
+.wifi-networks.json
+*.key
+*.pem
+
+# System files
+.DS_Store
+*.swp
+*.swo
+*~
+
