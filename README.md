@@ -1,66 +1,126 @@
-# PowerBook G4 OpenBSD Setup
+# PowerBook OpenBSD Setup
 
-This repository contains configuration files and scripts for the PowerBook G4 running OpenBSD 7.7.
+A collection of tools, scripts, and configurations for running OpenBSD on 32-bit PowerPC Macs (macppc).
 
-## System Info
+**Primary target:** PowerBook G4 12" running OpenBSD 7.7  
+**Status:** Your mileage may vary on other PowerPC Macs - contributions welcome!
 
-- **Model**: PowerBook6,4
-- **CPU**: PowerPC 7447A @ 1.33 GHz
-- **GPU**: NVIDIA GeForce FX Go 5200
-- **RAM**: 1.19 GiB
-- **OS**: OpenBSD 7.7 macppc
+## 🎯 Project Goals
 
-## Scripts
+This repository aims to make it easier to use OpenBSD on vintage PowerPC Macs by providing:
+- Essential system packages curated for PowerPC
+- Custom tools built specifically for OpenBSD/macppc
+- Installation scripts for third-party tools
+- Dotfiles and configurations optimized for the platform
 
-### wifi-manager
+## 📦 What's Included
 
-A WiFi network management tool for OpenBSD.
+### System Packages (from OpenBSD ports)
+Installed via `packages.txt`:
+- **Development:** git, cmake, gmake, gnupg
+- **Editors:** vim, nano
+- **Shells:** bash
+- **Utilities:** htop, tmux, wget, curl
 
-**Installation:**
+### Third-Party Tools (compiled from source)
+- **fastfetch** - System information display tool
+- **pyenv** - Python version management
+
+### Custom Tools (built for this project)
+- **wifi-manager** - WiFi network management for OpenBSD ([docs](tools/wifi-manager/README.md))
+
+## 🚀 Quick Start
+
 ```bash
-sudo cp bin/wifi-manager /usr/local/bin/
-sudo chmod +x /usr/local/bin/wifi-manager
+# Clone the repository
+git clone git@github.com:dannydorazio/powerbook-openbsd.git
+cd powerbook-openbsd
+
+# Run the installer
+./install.sh
 ```
 
-**Usage:**
-```bash
-wifi-manager list                    # List configured networks
-wifi-manager connect "network-name"  # Connect to a network
-wifi-manager disconnect              # Disconnect from WiFi
-wifi-manager scan                    # Scan for networks
-wifi-manager add "name" "password"   # Add new network
-wifi-manager status                  # Show current status
+The installer will show you available components:
+```
+1) fastfetch   - System information tool (built from source)
+2) packages    - Install essential system packages from packages.txt  
+3) pyenv       - Python version management tool
+4) wifi-manager - WiFi network management tool for OpenBSD
 ```
 
-**Configuration:**
+Press Enter to install everything, or enter numbers (e.g., `1 3`) to install specific tools.
 
-Networks are stored in `~/.wifi-networks.json`:
-```json
-{
-  "networks": [
-    {
-      "name": "network-name",
-      "password": "password",
-      "enabled": true
-    }
-  ]
-}
+## 🖥️ System Info
+
+**Tested Configuration:**
+- **Model:** PowerBook G4 12" (PowerBook6,4)
+- **CPU:** PowerPC 7447A @ 1.33 GHz
+- **GPU:** NVIDIA GeForce FX Go 5200
+- **RAM:** 1.25 GiB
+- **OS:** OpenBSD 7.7 macppc
+- **WiFi:** Broadcom bwi0
+
+## 📁 Repository Structure
+
+```
+powerbook-openbsd/
+├── README.md              # This file
+├── packages.txt           # List of pkg packages to install
+├── install.sh             # Master installer script
+├── installers/            # Individual installer scripts
+│   ├── fastfetch-installer.sh
+│   ├── packages-installer.sh
+│   ├── pyenv-installer.sh
+│   └── wifi-manager-installer.sh
+└── tools/                 # Custom tools
+    └── wifi-manager/      # WiFi management tool
+        ├── README.md
+        └── wifi-manager
 ```
 
-## Setup Instructions
+## 🛠️ Adding New Tools
 
-1. Clone this repository
-2. Install scripts from `bin/` to `/usr/local/bin/`
-3. Copy any config files to appropriate locations
-4. Run setup scripts as needed
+### Adding a Custom Tool
 
-## Installed Software
+1. Create a directory in `tools/your-tool/`
+2. Add your script/binary and README.md
+3. Create `installers/your-tool-installer.sh`:
 
-- git
-- cmake
-- fastfetch (built from source)
-- pyenv (installed to `~/.pyenv`)
+```sh
+#!/bin/sh
+# INSTALLER_NAME: your-tool
+# INSTALLER_DESC: Brief description of what it does
+# INSTALLER_VERSION: 1.0
 
-# Commit Signing
+# Installation code here
+cp tools/your-tool/your-tool /usr/local/bin/
+chmod +x /usr/local/bin/your-tool
+```
 
-All commits from this repository are now GPG signed for verification.
+The master installer will automatically discover and list it!
+
+### Adding System Packages
+
+Just add the package name to `packages.txt` (one per line, comments start with `#`).
+
+## 🔐 Commit Signing
+
+All commits from this repository are GPG signed for verification.
+
+## 🤝 Contributing
+
+This is primarily built for my PowerBook G4 12", but I'd love to make it work on other PowerPC Macs:
+- PowerBook G4 15"/17"
+- iBook G3/G4
+- Power Mac G4/G5
+- iMac G3/G4/G5
+
+If you test on other hardware, please open an issue or PR with your findings!
+
+## 📝 License
+
+MIT License - Feel free to use and modify
+
+## 🙏 Acknowledgments
+
+Built with assistance from Claude Code on a journey to breathe new life into vintage PowerPC hardware.
