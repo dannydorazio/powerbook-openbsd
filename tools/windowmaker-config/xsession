@@ -1,0 +1,9 @@
+#!/bin/sh
+# X session startup script
+# Starts Window Maker (NeXTStep-style window manager)
+
+# Set background color (nice blue-grey)
+xsetroot -solid '#305060' &
+
+# Start Window Maker
+exec wmaker
