@@ -1,0 +1,25 @@
+# Essential packages for PowerBook OpenBSD
+# One package per line, comments start with #
+
+# Version control
+git
+
+# Build tools
+cmake
+gmake
+
+# Text editors
+vim
+nano
+
+# Shells
+bash
+
+# System utilities
+htop
+tmux
+wget
+curl
+
+# Development
+gnupg
