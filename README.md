@@ -21,6 +21,9 @@ Installed via `packages.txt`:
 - **Editors:** vim, nano
 - **Shells:** bash
 - **Utilities:** htop, tmux, wget, curl
+- **Window Manager:** windowmaker (NeXTStep-style)
+
+**Note:** Full desktop environments like XFCE, MATE, and GNOME are not available on OpenBSD macppc (32-bit PowerPC). Window Maker and CWM (default) are the recommended lightweight options.
 
 ### Third-Party Tools (compiled from source)
 - **fastfetch** - System information display tool

@@ -47,20 +47,6 @@ cp "$XSESSION_FILE" "$USER_HOME/.xsession"
 chmod +x "$USER_HOME/.xsession"
 chown "$WM_USER:$WM_USER" "$USER_HOME/.xsession"
 
-# Wait a moment for Window Maker to create its default config if user logs in
-# Otherwise, we'll configure it on next run
-if [ -f "$USER_HOME/GNUstep/Defaults/WindowMaker" ]; then
-    echo "  Configuring mouse button emulation..."
-    # Add Control+Click for right-click emulation
-    if ! grep -q "MouseButton3Modifier" "$USER_HOME/GNUstep/Defaults/WindowMaker"; then
-        awk '/ModifierKey = Mod1;/ {print; print "\tMouseButton2Modifier = Mod1;"; print "\tMouseButton3Modifier = Control;"; next}1' \
-            "$USER_HOME/GNUstep/Defaults/WindowMaker" > /tmp/WindowMaker.new
-        mv /tmp/WindowMaker.new "$USER_HOME/GNUstep/Defaults/WindowMaker"
-        chown "$WM_USER:$WM_USER" "$USER_HOME/GNUstep/Defaults/WindowMaker"
-        echo "  ✓ Mouse button emulation configured"
-    fi
-fi
-
 echo "✓ Window Maker configured for user $WM_USER"
 echo ""
 echo "  To activate:"
@@ -68,7 +54,4 @@ echo "    1. Log out of X11"
 echo "    2. Log back in via xenodm"
 echo ""
 echo "  Window Maker will start automatically!"
-echo "  Control+Click will work as right-click"
-echo ""
-echo "  Note: If Control+Click doesn't work, log out and log back in again"
-echo "  to allow Window Maker to create its config, then run this installer again."
+echo "  Right-click on desktop to access applications menu"
