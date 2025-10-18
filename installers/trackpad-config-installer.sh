@@ -7,7 +7,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 CONFIG_FILE="$SCRIPT_DIR/tools/trackpad-config/10-trackpad.conf"
-TARGET_DIR="/etc/X11/xorg.conf.d"
+TARGET_DIR="/usr/X11R6/share/X11/xorg.conf.d"
 TARGET_FILE="$TARGET_DIR/10-trackpad.conf"
 
 echo "→ Installing trackpad configuration..."
@@ -18,10 +18,11 @@ if [ ! -f "$CONFIG_FILE" ]; then
     exit 1
 fi
 
-# Create target directory if it doesn't exist
+# Target directory should already exist (system directory)
 if [ ! -d "$TARGET_DIR" ]; then
-    echo "  Creating $TARGET_DIR"
-    mkdir -p "$TARGET_DIR"
+    echo "✗ System config directory not found: $TARGET_DIR"
+    echo "  This should not happen on a standard OpenBSD X11 installation"
+    exit 1
 fi
 
 # Check if already installed

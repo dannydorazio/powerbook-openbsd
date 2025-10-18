@@ -14,7 +14,7 @@ However, this functionality needs to be properly configured at the X11 level.
 
 Since OpenBSD on PowerBook G4 uses the `ums` (USB mouse) or ADB mouse drivers, we configure X11 to emulate 3-button mouse behavior using the `Emulate3Buttons` option.
 
-This configuration file (`/etc/X11/xorg.conf.d/10-trackpad.conf`) enables:
+This configuration file (`/usr/X11R6/share/X11/xorg.conf.d/10-trackpad.conf`) enables:
 1. **Emulate3Buttons**: Control+Click becomes right-click
 2. **Emulate3Timeout**: How long to wait (in ms) for the control key
 
@@ -28,7 +28,7 @@ cd /root/powerbook-openbsd
 
 Or manually:
 ```sh
-cp tools/trackpad-config/10-trackpad.conf /etc/X11/xorg.conf.d/
+cp tools/trackpad-config/10-trackpad.conf /usr/X11R6/share/X11/xorg.conf.d/
 ```
 
 Then restart X11 or reboot.
@@ -64,7 +64,7 @@ grep -r Emulate3 /var/log/Xorg.0.log
 
 2. Verify the config file exists:
    ```sh
-   ls -la /etc/X11/xorg.conf.d/10-trackpad.conf
+   ls -la /usr/X11R6/share/X11/xorg.conf.d/10-trackpad.conf
    ```
 
 3. Try restarting X11:
@@ -75,9 +75,4 @@ grep -r Emulate3 /var/log/Xorg.0.log
 
 ### Config not loading
 
-Make sure the directory exists:
-```sh
-mkdir -p /etc/X11/xorg.conf.d
-```
-
-Then copy the config and restart X.
+The config directory `/usr/X11R6/share/X11/xorg.conf.d` should exist on any standard OpenBSD X11 installation. If it doesn't, you may need to reinstall X11 packages.
