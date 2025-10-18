@@ -1,5 +1,7 @@
 #!/bin/sh
-# Installation script for PowerBook OpenBSD setup
+# INSTALLER_NAME: wifi-manager
+# INSTALLER_DESC: WiFi network management tool for OpenBSD
+# INSTALLER_VERSION: 1.0
 
 echo "Installing powerbook-openbsd scripts..."
 

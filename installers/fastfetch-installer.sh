@@ -1,5 +1,7 @@
 #!/bin/sh
-# Installer for fastfetch (built from source)
+# INSTALLER_NAME: fastfetch
+# INSTALLER_DESC: System information tool (built from source)
+# INSTALLER_VERSION: 1.0
 
 echo "Installing fastfetch from source..."
 echo ""

@@ -1,5 +1,7 @@
 #!/bin/sh
-# Installer for pyenv
+# INSTALLER_NAME: pyenv
+# INSTALLER_DESC: Python version management tool
+# INSTALLER_VERSION: 1.0
 
 echo "Installing pyenv..."
 echo ""
