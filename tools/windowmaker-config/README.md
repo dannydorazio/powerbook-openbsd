@@ -29,6 +29,16 @@ cp tools/windowmaker-config/xsession ~/.xsession
 chmod +x ~/.xsession
 ```
 
+## Mouse Button Emulation
+
+Window Maker needs special configuration to support Control+Click for right-click (button 3 emulation).
+
+The configuration includes:
+- `MouseButton2Modifier = Mod1;` - Alt+Click for middle-click
+- `MouseButton3Modifier = Control;` - Control+Click for right-click
+
+This is automatically configured by the installer.
+
 ## Activation
 
 After installation, log out and log back in via xenodm. Window Maker will start automatically.
