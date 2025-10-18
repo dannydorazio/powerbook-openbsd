@@ -61,3 +61,6 @@ Networks are stored in `~/.wifi-networks.json`:
 - fastfetch (built from source)
 - pyenv (installed to `~/.pyenv`)
 
+# Commit Signing
+
+All commits from this repository are now GPG signed for verification.
