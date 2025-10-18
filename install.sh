@@ -1,48 +1,88 @@
 #!/bin/sh
 # Master installation script for PowerBook OpenBSD setup
-# This script runs all installers in the installers/ directory
 
 echo "================================="
 echo "PowerBook OpenBSD Setup Installer"
 echo "================================="
 echo ""
 
-# Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 INSTALLERS_DIR="$SCRIPT_DIR/installers"
 
-# Check if installers directory exists
 if [ ! -d "$INSTALLERS_DIR" ]; then
-    echo "Error: installers directory not found at $INSTALLERS_DIR"
+    echo "Error: installers directory not found"
     exit 1
 fi
 
-# Count total installers
-total_installers=$(find "$INSTALLERS_DIR" -name "*-installer.sh" -type f | wc -l | tr -d " ")
+# Build list of installers
+INSTALLER_LIST=""
+count=0
+for installer in "$INSTALLERS_DIR"/*-installer.sh; do
+    if [ -f "$installer" ]; then
+        count=$((count + 1))
+        INSTALLER_LIST="$INSTALLER_LIST$installer
+"
+    fi
+done
 
-if [ "$total_installers" -eq 0 ]; then
-    echo "No installers found in $INSTALLERS_DIR"
+if [ "$count" -eq 0 ]; then
+    echo "No installers found"
     exit 0
 fi
 
-echo "Found $total_installers installer(s) to run"
+echo "Available installers:"
 echo ""
 
-# Run each installer
-for installer in "$INSTALLERS_DIR"/*-installer.sh; do
-    if [ -f "$installer" ]; then
-        installer_name=$(basename "$installer")
-        echo "Running $installer_name..."
+# Display menu
+i=1
+echo "$INSTALLER_LIST" | while IFS= read -r installer; do
+    if [ -n "$installer" ]; then
+        name=$(basename "$installer" -installer.sh)
+        printf "  %d) %s\n" "$i" "$name"
+        i=$((i + 1))
+    fi
+done
+
+echo ""
+echo "Enter installer numbers to run (space-separated), or press Enter for all:"
+read -r selection
+
+# Determine which to run
+if [ -z "$selection" ]; then
+    # Run all
+    SELECTED="$INSTALLER_LIST"
+else
+    # Build selected list
+    SELECTED=""
+    for num in $selection; do
+        i=1
+        echo "$INSTALLER_LIST" | while IFS= read -r installer; do
+            if [ -n "$installer" ] && [ "$i" -eq "$num" ]; then
+                echo "$installer"
+                break
+            fi
+            i=$((i + 1))
+        done
+    done > /tmp/selected_installers_$$
+    SELECTED=$(cat /tmp/selected_installers_$$)
+    rm -f /tmp/selected_installers_$$
+fi
+
+echo ""
+echo "Running selected installers..."
+echo ""
+
+# Run installers
+echo "$SELECTED" | while IFS= read -r installer; do
+    if [ -n "$installer" ] && [ -f "$installer" ]; then
+        name=$(basename "$installer")
+        echo "Running $name..."
         echo "---"
-        
-        # Make sure installer is executable
         chmod +x "$installer"
-        
-        # Run the installer
         if sh "$installer"; then
-            echo "✓ $installer_name completed successfully"
+            echo "✓ $name completed"
         else
-            echo "✗ $installer_name failed"
+            echo "✗ $name failed"
         fi
         echo ""
     fi
