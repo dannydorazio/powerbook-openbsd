@@ -1,0 +1,89 @@
+# CWM Configuration for PowerBook G4
+# Calm Window Manager - OpenBSD default
+
+# Set font for menus (monospace is safe)
+fontname "monospace:pixelsize=14"
+
+# Set border width and colors
+borderwidth 2
+color activeborder   "#4c7899"
+color inactiveborder "#333333"
+color urgencyborder  "#ff6b6b"
+color groupborder    "#7c6f64"
+color ungroupborder  "#a89984"
+
+# Menu colors
+color menubg    "#2e3440"
+color menufg    "#d8dee9"
+color font      "#eceff4"
+color selfont   "#88c0d0"
+
+# Gap around windows (top, bottom, left, right)
+gap 0 0 0 0
+
+# Sticky group (windows that appear on all desktops)
+sticky yes
+
+# Ignore certain windows from being managed
+ignore polybar
+ignore tint2
+
+# Keyboard bindings
+# Mod4 = Windows/Command key, M = Alt/Meta, C = Control, S = Shift
+
+# Window management
+bind-key 4-Return   terminal      # Cmd+Enter: Open terminal
+bind-key M-slash    menu-window   # Alt+/: Window menu
+bind-key M-question menu-exec     # Alt+?: Application launcher
+bind-key M-period   menu-ssh      # Alt+.: SSH menu
+
+# Window operations
+bind-key MS-q    window-delete    # Alt+Shift+Q: Close window
+bind-key M-f     window-fullscreen # Alt+F: Fullscreen
+bind-key M-m     window-maximize  # Alt+M: Maximize
+bind-key M-equal window-vmaximize # Alt+=: Vertical maximize
+bind-key M-h     window-hide      # Alt+H: Hide window
+
+# Window movement (Alt+Arrow keys)
+bind-key M-Left  window-snap-left
+bind-key M-Right window-snap-right
+bind-key M-Up    window-snap-up
+bind-key M-Down  window-snap-down
+
+# Group/Desktop switching (Alt+1-9)
+bind-key M-1 group-only-1
+bind-key M-2 group-only-2
+bind-key M-3 group-only-3
+bind-key M-4 group-only-4
+bind-key M-5 group-only-5
+
+# Move window to group (Alt+Shift+1-9)
+bind-key MS-1 window-movetogroup-1
+bind-key MS-2 window-movetogroup-2
+bind-key MS-3 window-movetogroup-3
+bind-key MS-4 window-movetogroup-4
+bind-key MS-5 window-movetogroup-5
+
+# Application launcher menu
+command terminal  "xterm"
+command dillo    "dillo"
+command netsurf  "netsurf-gtk3"
+command netsurf   "netsurf-gtk3"
+command files     "thunar"
+command top       "xterm -e htop"
+
+# Mouse bindings
+# Button1 = Left, Button2 = Middle, Button3 = Right
+mousebind M-1 window-move
+mousebind M-2 window-hide
+mousebind M-3 window-resize
+
+# Auto-group windows (assign apps to specific desktops)
+autogroup 1 "xterm"
+autogroup 2 "Firefox"
+autogroup 2 "Chromium"
+autogroup 3 "thunar"
+
+# Ignore programs from being managed (if needed)
+# ignore xterm
+

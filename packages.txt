@@ -27,3 +27,8 @@ gnupg
 # Window managers (lightweight for PowerPC)
 # Note: XFCE, MATE, and GNOME are not fully available on macppc
 windowmaker
+
+# Web browsers (lightweight for PowerPC)
+# Note: Firefox, Chromium, and modern browsers are NOT available on macppc
+dillo
+netsurf

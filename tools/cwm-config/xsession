@@ -1,0 +1,14 @@
+#!/bin/sh
+# X session startup script
+# Starts CWM (Calm Window Manager)
+
+# Load X resources if they exist
+if [ -f $HOME/.Xresources ]; then
+    xrdb -load $HOME/.Xresources
+fi
+
+# Start xterm
+xterm &
+
+# Start CWM
+exec cwm

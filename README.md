@@ -31,6 +31,13 @@ Installed via `packages.txt`:
 
 ### Custom Tools (built for this project)
 - **wifi-manager** - WiFi network management for OpenBSD ([docs](tools/wifi-manager/README.md))
+- **cwm-config** - CWM window manager configuration with keybindings and colors ([docs](tools/cwm-config/README.md))
+
+### Web Browsers
+- **Dillo** - Ultra-lightweight browser, no JavaScript
+- **NetSurf** - Lightweight browser with better rendering than Dillo
+
+**Note**: Modern browsers (Firefox, Chromium) are NOT available on macppc. Dillo and NetSurf are suitable for basic web browsing, documentation reading, and simple sites.
 
 ## 🚀 Quick Start
 
