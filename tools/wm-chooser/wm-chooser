@@ -8,9 +8,14 @@ echo "Window Manager Chooser"
 echo "======================"
 echo ""
 echo "Available window managers:"
-echo "  1) CWM - Calm Window Manager (lightweight, keyboard-driven)"
-echo "  2) Window Maker - NeXTStep-style window manager"
+echo "  1) CWM - Calm Window Manager (minimal, keyboard-driven)"
+echo "  2) Window Maker - NeXTStep-style (dock, clip)"
 echo "  3) FVWM - F Virtual Window Manager (classic)"
+echo "  4) Openbox - Lightweight stacking WM"
+echo "  5) IceWM - Windows 95-like interface"
+echo "  6) Fluxbox - Blackbox-based, very light"
+echo "  7) JWM - Joe's Window Manager (tiny)"
+echo "  8) i3 - Tiling window manager"
 echo ""
 
 # Show current choice
@@ -20,7 +25,7 @@ if [ -f "$SESSION_FILE" ]; then
     echo ""
 fi
 
-echo -n "Select window manager (1-3) or press Enter to keep current: "
+echo -n "Select window manager (1-8) or press Enter to keep current: "
 read choice
 
 case "$choice" in
@@ -35,6 +40,26 @@ case "$choice" in
     3)
         echo "fvwm" > "$SESSION_FILE"
         echo "✓ FVWM selected. Log out and log back in to use it."
+        ;;
+    4)
+        echo "openbox" > "$SESSION_FILE"
+        echo "✓ Openbox selected. Log out and log back in to use it."
+        ;;
+    5)
+        echo "icewm" > "$SESSION_FILE"
+        echo "✓ IceWM selected. Log out and log back in to use it."
+        ;;
+    6)
+        echo "fluxbox" > "$SESSION_FILE"
+        echo "✓ Fluxbox selected. Log out and log back in to use it."
+        ;;
+    7)
+        echo "jwm" > "$SESSION_FILE"
+        echo "✓ JWM selected. Log out and log back in to use it."
+        ;;
+    8)
+        echo "i3" > "$SESSION_FILE"
+        echo "✓ i3 selected. Log out and log back in to use it."
         ;;
     "")
         echo "No change made."

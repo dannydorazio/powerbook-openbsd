@@ -14,6 +14,13 @@ xenodm (OpenBSD's display manager) doesn't have a built-in graphical session sel
 - **CWM** (Calm Window Manager) - OpenBSD's default, lightweight and keyboard-driven
 - **Window Maker** - NeXTStep-style window manager with dock and clip
 - **FVWM** - Classic F Virtual Window Manager
+- **Openbox** - Lightweight stacking window manager
+- **IceWM** - Windows 95-like interface, very customizable
+- **Fluxbox** - Blackbox-based, minimal resource usage
+- **JWM** (Joe's Window Manager) - Extremely tiny and fast
+- **i3** - Tiling window manager for power users
+
+**Note**: DWM is not available on OpenBSD macppc.
 
 ## Installation
 
@@ -61,16 +68,21 @@ Window Manager Chooser
 ======================
 
 Available window managers:
-  1) CWM - Calm Window Manager (lightweight, keyboard-driven)
-  2) Window Maker - NeXTStep-style window manager
+  1) CWM - Calm Window Manager (minimal, keyboard-driven)
+  2) Window Maker - NeXTStep-style (dock, clip)
   3) FVWM - F Virtual Window Manager (classic)
+  4) Openbox - Lightweight stacking WM
+  5) IceWM - Windows 95-like interface
+  6) Fluxbox - Blackbox-based, very light
+  7) JWM - Joe's Window Manager (tiny)
+  8) i3 - Tiling window manager
 
 Current choice: cwm
 
-Select window manager (1-3) or press Enter to keep current:
+Select window manager (1-8) or press Enter to keep current:
 ```
 
-Enter your choice (1-3) and log out/in to use the new window manager.
+Enter your choice (1-8) and log out/in to use the new window manager.
 
 ### Adding to CWM Menu
 
@@ -88,9 +100,14 @@ Then press **Alt+?** and type "wm-chooser".
 You can also manually edit `~/.xsession-choice`:
 
 ```sh
-echo "wmaker" > ~/.xsession-choice   # Use Window Maker
 echo "cwm" > ~/.xsession-choice      # Use CWM
+echo "wmaker" > ~/.xsession-choice   # Use Window Maker
 echo "fvwm" > ~/.xsession-choice     # Use FVWM
+echo "openbox" > ~/.xsession-choice  # Use Openbox
+echo "icewm" > ~/.xsession-choice    # Use IceWM
+echo "fluxbox" > ~/.xsession-choice  # Use Fluxbox
+echo "jwm" > ~/.xsession-choice      # Use JWM
+echo "i3" > ~/.xsession-choice       # Use i3
 ```
 
 Then log out and log back in.

@@ -11,19 +11,26 @@ SESSION_FILE="$HOME/.xsession-choice"
 
 # If no choice file exists, show menu
 if [ ! -f "$SESSION_FILE" ]; then
-    # Use xmessage to show a simple dialog
-    xmessage -buttons "CWM:1,Window Maker:2,FVWM:3" -default "CWM" \
-        -center "Choose your Window Manager" \
+    # Use xmessage to show selection - simplified to 3 buttons due to xmessage limitations
+    # Most popular WMs as buttons, others accessible via wm-chooser command
+    xmessage -buttons "CWM:1,Window Maker:2,Other WMs:3" -default "CWM" \
+        -center "Choose Window Manager" \
         "Select your window manager:
 
-CWM - Lightweight, keyboard-driven
+CWM - Lightweight default
 Window Maker - NeXTStep-style
-FVWM - Classic window manager"
+Other WMs - Run 'wm-chooser' from terminal
+
+(openbox, icewm, fluxbox, jwm, i3, fvwm)"
     
     case $? in
         101) SESSION="cwm" ;;
         102) SESSION="wmaker" ;;
-        103) SESSION="fvwm" ;;
+        103) 
+            # Launch terminal with wm-chooser, then use cwm as default for this session
+            SESSION="cwm"
+            (sleep 2; xterm -e "wm-chooser; echo 'Press Enter to close'; read x") &
+            ;;
         *)   SESSION="cwm" ;;
     esac
     
@@ -42,6 +49,21 @@ case "$SESSION" in
         ;;
     fvwm)
         exec /usr/X11R6/bin/fvwm
+        ;;
+    openbox)
+        exec /usr/local/bin/openbox
+        ;;
+    icewm)
+        exec /usr/local/bin/icewm
+        ;;
+    fluxbox)
+        exec /usr/local/bin/fluxbox
+        ;;
+    jwm)
+        exec /usr/local/bin/jwm
+        ;;
+    i3)
+        exec /usr/local/bin/i3
         ;;
     *)
         exec /usr/X11R6/bin/cwm
