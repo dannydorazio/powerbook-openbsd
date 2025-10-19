@@ -87,3 +87,15 @@ autogroup 3 "thunar"
 # Ignore programs from being managed (if needed)
 # ignore xterm
 
+
+# Window resizing with keyboard (Ctrl+Alt+Arrow keys)
+bind-key CM-Left   window-resize-left
+bind-key CM-Right  window-resize-right
+bind-key CM-Up     window-resize-up
+bind-key CM-Down   window-resize-down
+
+# Grow window (Ctrl+Alt+Shift+Arrow keys)
+bind-key CMS-Left  window-resize-left-big
+bind-key CMS-Right window-resize-right-big
+bind-key CMS-Up    window-resize-up-big
+bind-key CMS-Down  window-resize-down-big

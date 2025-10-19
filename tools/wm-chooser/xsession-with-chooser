@@ -1,0 +1,49 @@
+#!/bin/sh
+# X session startup script with session chooser
+
+# Load X resources if they exist
+if [ -f $HOME/.Xresources ]; then
+    xrdb -load $HOME/.Xresources
+fi
+
+# Check for session choice file
+SESSION_FILE="$HOME/.xsession-choice"
+
+# If no choice file exists, show menu
+if [ ! -f "$SESSION_FILE" ]; then
+    # Use xmessage to show a simple dialog
+    xmessage -buttons "CWM:1,Window Maker:2,FVWM:3" -default "CWM" \
+        -center "Choose your Window Manager" \
+        "Select your window manager:
+
+CWM - Lightweight, keyboard-driven
+Window Maker - NeXTStep-style
+FVWM - Classic window manager"
+    
+    case $? in
+        101) SESSION="cwm" ;;
+        102) SESSION="wmaker" ;;
+        103) SESSION="fvwm" ;;
+        *)   SESSION="cwm" ;;
+    esac
+    
+    echo "$SESSION" > "$SESSION_FILE"
+else
+    SESSION=$(cat "$SESSION_FILE")
+fi
+
+# Start xterm
+xterm &
+
+# Launch chosen window manager
+case "$SESSION" in
+    wmaker)
+        exec /usr/local/bin/wmaker
+        ;;
+    fvwm)
+        exec /usr/X11R6/bin/fvwm
+        ;;
+    *)
+        exec /usr/X11R6/bin/cwm
+        ;;
+esac

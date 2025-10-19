@@ -62,6 +62,13 @@ pkill X
 - **Alt+Up**: Snap window to top
 - **Alt+Down**: Snap window to bottom
 
+### Window Resizing (Ctrl+Alt + Arrow Keys)
+- **Ctrl+Alt+Left**: Shrink window from right edge
+- **Ctrl+Alt+Right**: Grow window to the right
+- **Ctrl+Alt+Up**: Shrink window from bottom edge
+- **Ctrl+Alt+Down**: Grow window downward
+- **Ctrl+Alt+Shift+Arrows**: Resize in larger increments
+
 ### Virtual Desktops/Groups
 - **Alt+1** through **Alt+5**: Switch to workspace 1-5
 - **Alt+Shift+1** through **Alt+Shift+5**: Move window to workspace 1-5

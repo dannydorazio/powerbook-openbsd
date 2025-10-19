@@ -1,0 +1,45 @@
+#!/bin/sh
+# Window Manager Chooser
+# Allows you to select which WM to use at next login
+
+SESSION_FILE="$HOME/.xsession-choice"
+
+echo "Window Manager Chooser"
+echo "======================"
+echo ""
+echo "Available window managers:"
+echo "  1) CWM - Calm Window Manager (lightweight, keyboard-driven)"
+echo "  2) Window Maker - NeXTStep-style window manager"
+echo "  3) FVWM - F Virtual Window Manager (classic)"
+echo ""
+
+# Show current choice
+if [ -f "$SESSION_FILE" ]; then
+    CURRENT=$(cat "$SESSION_FILE")
+    echo "Current choice: $CURRENT"
+    echo ""
+fi
+
+echo -n "Select window manager (1-3) or press Enter to keep current: "
+read choice
+
+case "$choice" in
+    1)
+        echo "cwm" > "$SESSION_FILE"
+        echo "✓ CWM selected. Log out and log back in to use it."
+        ;;
+    2)
+        echo "wmaker" > "$SESSION_FILE"
+        echo "✓ Window Maker selected. Log out and log back in to use it."
+        ;;
+    3)
+        echo "fvwm" > "$SESSION_FILE"
+        echo "✓ FVWM selected. Log out and log back in to use it."
+        ;;
+    "")
+        echo "No change made."
+        ;;
+    *)
+        echo "Invalid choice. No change made."
+        ;;
+esac
